@@ -1,11 +1,7 @@
 ---
 title: "Predict Monthly Income"
-output: html_document
+output: rmarkdown::github_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## Read data
 
@@ -14,7 +10,7 @@ Dataset is a modified version of the IBM HR Analytics Employee Attrition & Perfo
 This dataset was obtained from <https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset>.
 
 ```{r read data}
-full_data <- read.csv("WA_Fn-UseC_-HR-Employee-Attrition.csv", header = T)
+full_data <- read.csv("./WA_Fn-UseC_-HR-Employee-Attrition.csv", header = T)
 head(full_data)
 
 ```
