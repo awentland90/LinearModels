@@ -1,0 +1,62 @@
+---
+title: "Predict Monthly Income"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Read data
+
+Dataset is a modified version of the IBM HR Analytics Employee Attrition & Performance Data. 
+
+This dataset was obtained from <https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset>.
+
+```{r read data}
+full_data <- read.csv("WA_Fn-UseC_-HR-Employee-Attrition.csv", header = T)
+head(full_data)
+
+```
+
+## Prepare data for PCA
+
+Scale independent variables for principle component analysis
+
+```{r prepare data}
+scale.vars <- scale(full_data[, 1:20]) 
+scale.vars[is.nan(scale.vars)] <- 0 
+vars.income <- full_data[, 21]
+```
+
+## Apply PCA and plot top principle components by variance
+
+
+```{r PCA}
+vars.pca <- prcomp(scale.vars,
+                 center = TRUE,
+                 scale. = TRUE)
+
+plot(vars.pca, type = "l")
+```
+
+## Get summary of each component and their proportion in explaining variance 
+
+```{r PCA summary}
+summary(vars.pca)
+```
+
+## Build linear regression model based on top 5 and top 1 principle components
+```{r build linear models}
+income.modeltop5 <- lm(MonthlyIncome ~ Age+DistanceFromHome+Education+EmployeeNumber+EnvironmentSatisfaction, data=full_data)
+income.modeltop1 <- lm(MonthlyIncome ~ Age, data=full_data)
+```
+
+## Summarize models
+```{r summarize linear models}
+summary(income.modeltop5)
+summary(income.modeltop1)
+```
+
+We see the linear models based on Age vs. the model based on  Age + DistanceFromHome + Education + 
+    EmployeeNumber + EnvironmentSatisfaction are quite similar since age is the most significant variable that contributes in predicting monthly income
