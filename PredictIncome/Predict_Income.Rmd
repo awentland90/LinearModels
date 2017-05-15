@@ -1,6 +1,6 @@
 ---
 title: "Predict Monthly Income"
-output: rmarkdown::github_document
+output: github_document
 ---
 
 ## Read data
